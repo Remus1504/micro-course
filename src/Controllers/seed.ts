@@ -10,7 +10,7 @@ const course = async (req: Request, res: Response): Promise<void> => {
     'micrograde-course',
     'get-instructors',
     JSON.stringify({ type: 'getInstructors', count }),
-    'Course seed message sent to user service.'
+    'Course seed message sent to user service.',
   );
   res
     .status(StatusCodes.CREATED)

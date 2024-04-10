@@ -1,5 +1,5 @@
 import { config } from '../configuration';
-import { winstonLogger } from '@remus1504/micrograde';
+import { winstonLogger } from '@remus1504/micrograde-shared';
 import { Channel } from 'amqplib';
 import { Logger } from 'winston';
 import { createConnection } from '../Queues/connection';

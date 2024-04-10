@@ -5,7 +5,7 @@ import {
   GetResponse,
 } from '@elastic/elasticsearch/lib/api/types';
 import { config } from '../src/configuration';
-import { InstructorCourse, winstonLogger } from '@remus1504/micrograde';
+import { InstructorCourse, winstonLogger } from '@remus1504/micrograde-shared';
 import { Logger } from 'winston';
 
 const log: Logger = winstonLogger(

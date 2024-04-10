@@ -1,13 +1,13 @@
+import { verifyGatewayRequest } from '@remus1504/micrograde-shared';
 import { Application } from 'express';
-import { verifyGatewayRequest } from '@remus1504/micrograde';
-import { healthRoutes } from '../src/Endpoints/Health';
-const STUDENT_BASE_PATH = '/api/v1/student';
-const INSTRUCTOR_BASE_PATH = '/api/vi/instructor';
+import { courseRoutes } from './Endpoints/course';
+import { healthRoutes } from './Endpoints/Health';
 
-const endPoints = (app: Application): void => {
+const BASE_PATH = '/api/v1/course';
+
+const appRoutes = (app: Application): void => {
   app.use('', healthRoutes());
-  app.use(STUDENT_BASE_PATH, verifyGatewayRequest);
-  app.use(INSTRUCTOR_BASE_PATH, verifyGatewayRequest);
+  app.use(BASE_PATH, verifyGatewayRequest, courseRoutes());
 };
 
-export { endPoints };
+export { appRoutes };

@@ -1,5 +1,5 @@
 import { config } from '../configuration';
-import { winstonLogger } from '@remus1504/micrograde';
+import { winstonLogger } from '@remus1504/micrograde-shared';
 import { createClient } from 'redis';
 import { Logger } from 'winston';
 

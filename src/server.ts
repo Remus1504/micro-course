@@ -6,7 +6,7 @@ import {
   IAuthPayload,
   IErrorResponse,
   winstonLogger,
-} from '@remus1504/micrograde';
+} from '@remus1504/micrograde-shared';
 import { Logger } from 'winston';
 import { config } from '../src/configuration';
 import {
@@ -23,7 +23,7 @@ import cors from 'cors';
 import { verify } from 'jsonwebtoken';
 import compression from 'compression';
 import { checkConnection, createIndex } from '../src/elasticsearch';
-import { endPoints } from '../src/endpoints';
+import { appRoutes } from '../src/endpoints';
 import { createConnection } from '../src/Queues/connection';
 import { Channel } from 'amqplib';
 import {
@@ -55,7 +55,7 @@ const securityMiddleware = (app: Application): void => {
   app.use(helmet());
   app.use(
     cors({
-      origin: config.API_GATEWAY_URL,
+      origin: config.API_GATEWAY_ENDPOINT,
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     })
@@ -80,7 +80,7 @@ const standardMiddleware = (app: Application): void => {
 };
 
 const routesMiddleware = (app: Application): void => {
-  endPoints(app);
+  appRoutes(app);
 };
 
 const startQueues = async (): Promise<void> => {
@@ -91,7 +91,7 @@ const startQueues = async (): Promise<void> => {
 
 const startElasticSearch = (): void => {
   checkConnection();
-  createIndex('course');
+  createIndex('courses');
 };
 
 const courseErrorHandler = (app: Application): void => {

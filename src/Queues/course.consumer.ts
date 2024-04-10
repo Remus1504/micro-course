@@ -1,5 +1,5 @@
 import { config } from '../configuration';
-import { winstonLogger } from '@remus1504/micrograde';
+import { winstonLogger } from '@remus1504/micrograde-shared';
 import { Channel, ConsumeMessage, Replies } from 'amqplib';
 import { Logger } from 'winston';
 import { createConnection } from '../Queues/connection';
@@ -20,16 +20,19 @@ const consumeCourseDirectMessage = async (channel: Channel): Promise<void> => {
     const routingKey = 'update-course';
     const queueName = 'course-update-queue';
     await channel.assertExchange(exchangeName, 'direct');
-    const jobberQueue: Replies.AssertQueue = await channel.assertQueue(
+    const microgradeQueue: Replies.AssertQueue = await channel.assertQueue(
       queueName,
       { durable: true, autoDelete: false }
     );
-    await channel.bindQueue(jobberQueue.queue, exchangeName, routingKey);
-    channel.consume(jobberQueue.queue, async (msg: ConsumeMessage | null) => {
-      const { courseReview } = JSON.parse(msg!.content.toString());
-      await updateCourseReview(JSON.parse(courseReview));
-      channel.ack(msg!);
-    });
+    await channel.bindQueue(microgradeQueue.queue, exchangeName, routingKey);
+    channel.consume(
+      microgradeQueue.queue,
+      async (msg: ConsumeMessage | null) => {
+        const { courseReview } = JSON.parse(msg!.content.toString());
+        await updateCourseReview(JSON.parse(courseReview));
+        channel.ack(msg!);
+      }
+    );
   } catch (error) {
     log.log(
       'error',
@@ -48,16 +51,19 @@ const consumeSeedDirectMessages = async (channel: Channel): Promise<void> => {
     const routingKey = 'receive-instructors';
     const queueName = 'seed-course-queue';
     await channel.assertExchange(exchangeName, 'direct');
-    const jobberQueue: Replies.AssertQueue = await channel.assertQueue(
+    const microgradeQueue: Replies.AssertQueue = await channel.assertQueue(
       queueName,
       { durable: true, autoDelete: false }
     );
-    await channel.bindQueue(jobberQueue.queue, exchangeName, routingKey);
-    channel.consume(jobberQueue.queue, async (msg: ConsumeMessage | null) => {
-      const { sellers, count } = JSON.parse(msg!.content.toString());
-      await seedData(sellers, count);
-      channel.ack(msg!);
-    });
+    await channel.bindQueue(microgradeQueue.queue, exchangeName, routingKey);
+    channel.consume(
+      microgradeQueue.queue,
+      async (msg: ConsumeMessage | null) => {
+        const { instructors, count } = JSON.parse(msg!.content.toString());
+        await seedData(instructors, count);
+        channel.ack(msg!);
+      }
+    );
   } catch (error) {
     log.log(
       'error',

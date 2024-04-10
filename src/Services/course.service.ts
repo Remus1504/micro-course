@@ -9,7 +9,7 @@ import {
   IReviewMessageDetails,
   InstructorDocument,
   InstructorCourse,
-} from '@remus1504/micrograde';
+} from '@remus1504/micrograde-shared';
 import { coursesSearchByInstructorId } from '../Services/course.search.service';
 import { CourseModel } from '../../src/Modals/course.modal';
 import { publishDirectMessage } from '../Queues/course.producer';
@@ -52,11 +52,11 @@ const createCourse = async (
     const data: InstructorCourse = createdCourse.toJSON?.() as InstructorCourse;
     await publishDirectMessage(
       courseChannel,
-      'jobber-seller-update',
-      'user-seller',
+      'micrograde-instructor-update',
+      'user-instructor',
       JSON.stringify({
         type: 'update-course-count',
-        courseSellerId: `${data.instructorId}`,
+        courseInstructorId: `${data.instructorId}`,
         count: 1,
       }),
       'Details sent to users service.'
@@ -73,11 +73,11 @@ const deleteCourse = async (
   await CourseModel.deleteOne({ _id: courseId }).exec();
   await publishDirectMessage(
     courseChannel,
-    'jobber-seller-update',
-    'user-seller',
+    'micrograde-instructor-update',
+    'user-instructor',
     JSON.stringify({
       type: 'update-course-count',
-      courseSellerId: instructorId,
+      courseInstructorId: instructorId,
       count: -1,
     }),
     'Details sent to users service.'
@@ -100,7 +100,7 @@ const updateCourse = async (
         tags: courseData.tags,
         price: courseData.price,
         coverImage: courseData.coverImage,
-        expectedDelivery: courseData.expectedDuration,
+        expectedDuration: courseData.expectedDuration,
         basicTitle: courseData.basicTitle,
         basicDescription: courseData.basicDescription,
       },
@@ -164,25 +164,25 @@ const updateCourseReview = async (
 };
 
 const seedData = async (
-  sellers: InstructorDocument[],
+  instructors: InstructorDocument[],
   count: string
 ): Promise<void> => {
   const categories: string[] = [
-    'Graphics & Design',
-    'Digital Marketing',
-    'Writing & Translation',
-    'Video & Animation',
-    'Music & Audio',
-    'Programming & Tech',
-    'Data',
+    'Maths',
+    'English',
+    'Computer Science',
+    'Religious Education',
+    'Music',
+    'Geography',
+    'Chemisty',
     'Business',
   ];
-  const expectedDelivery: string[] = [
-    '1 Day Delivery',
-    '2 Days Delivery',
-    '3 Days Delivery',
-    '4 Days Delivery',
-    '5 Days Delivery',
+  const expectedDuration: string[] = [
+    '10 Day Duration',
+    '20 Days Duration',
+    '30 Days Duration',
+    '40 Days Duration',
+    '50 Days Duration',
   ];
   const randomRatings = [
     { sum: 20, count: 4 },
@@ -192,17 +192,17 @@ const seedData = async (
     { sum: 5, count: 1 },
   ];
 
-  for (let i = 0; i < sellers.length; i++) {
-    const sellerDoc: InstructorDocument = sellers[i];
+  for (let i = 0; i < instructors.length; i++) {
+    const instructorDoc: InstructorDocument = instructors[i];
     const title = `I will ${faker.word.words(5)}`;
     const basicTitle = faker.commerce.productName();
     const basicDescription = faker.commerce.productDescription();
     const rating = sample(randomRatings);
     const course: InstructorCourse = {
-      profilePicture: sellerDoc.profilePicture,
-      instructorId: sellerDoc._id,
-      email: sellerDoc.email,
-      username: sellerDoc.username,
+      profilePicture: instructorDoc.profilePicture,
+      instructorId: instructorDoc._id,
+      email: instructorDoc.email,
+      username: instructorDoc.username,
       title: title.length <= 80 ? title : title.slice(0, 80),
       basicTitle:
         basicTitle.length <= 40 ? basicTitle : basicTitle.slice(0, 40),
@@ -225,7 +225,7 @@ const seedData = async (
       ],
       price: parseInt(faker.commerce.price({ min: 20, max: 30, dec: 0 })),
       coverImage: faker.image.urlPicsumPhotos(),
-      expectedDuration: `${sample(expectedDelivery)}`,
+      expectedDuration: `${sample(expectedDuration)}`,
       sortId: parseInt(count, 10) + i + 1,
       ratingsCount: (i + 1) % 4 === 0 ? rating!['count'] : 0,
       ratingSum: (i + 1) % 4 === 0 ? rating!['sum'] : 0,

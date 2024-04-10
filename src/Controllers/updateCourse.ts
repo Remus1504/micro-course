@@ -8,7 +8,7 @@ import {
   InstructorCourse,
   isDataURL,
   uploads,
-} from '@remus1504/micrograde';
+} from '@remus1504/micrograde-shared';
 import { UploadApiResponse } from 'cloudinary';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';

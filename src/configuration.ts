@@ -26,7 +26,7 @@ class Config {
   public CLOUD_API_KEY: string | undefined;
   public CLOUD_API_SECRET: string | undefined;
   public GATEWAY_JWT_TOKEN: string | undefined;
-  public API_GATEWAY_URL: string | undefined;
+  public API_GATEWAY_ENDPOINT: string | undefined;
   public REDIS_HOST: string | undefined;
   public ELASTIC_SEARCH_ENDPOINT: string | undefined;
 
@@ -39,7 +39,7 @@ class Config {
     this.CLOUD_API_KEY = process.env.CLOUD_API_KEY || '';
     this.CLOUD_API_SECRET = process.env.CLOUD_API_SECRET || '';
     this.GATEWAY_JWT_TOKEN = process.env.GATEWAY_JWT_TOKEN || '';
-    this.API_GATEWAY_URL = process.env.API_GATEWAY_URL || '';
+    this.API_GATEWAY_ENDPOINT = process.env.API_GATEWAY_ENDPOINT || '';
     this.REDIS_HOST = process.env.REDIS_HOST || '';
     this.ELASTIC_SEARCH_ENDPOINT = process.env.ELASTIC_SEARCH_ENDPOINT || '';
   }

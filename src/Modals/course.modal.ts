@@ -1,4 +1,4 @@
-import { InstructorCourse } from '@remus1504/micrograde';
+import { InstructorCourse } from '@remus1504/micrograde-shared';
 import mongoose, { Model, Schema, model } from 'mongoose';
 
 const courseSchema: Schema = new Schema(
@@ -15,7 +15,7 @@ const courseSchema: Schema = new Schema(
     subCategories: [{ type: String, required: true }],
     tags: [{ type: String }],
     active: { type: Boolean, default: true },
-    expectedDelivery: { type: String, default: '' },
+    expectedDuration: { type: String, default: '' },
     ratingsCount: { type: Number, default: 0 },
     ratingSum: { type: Number, default: 0 },
     ratingCategories: {

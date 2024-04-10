@@ -38,7 +38,7 @@ const courseCreateSchema: ObjectSchema = Joi.object().keys({
     'any.required': 'Course tags are required',
     'array.min': 'Please add at least one tag',
   }),
-  price: Joi.number().required().greater(4.99).messages({
+  price: Joi.number().required().greater(1).messages({
     'string.base': 'Please add a course price',
     'string.empty': 'Course price is required',
     'any.required': 'Course price is required',
@@ -51,10 +51,10 @@ const courseCreateSchema: ObjectSchema = Joi.object().keys({
     'array.min': 'Please add a cover image',
   }),
   expectedDuration: Joi.string().required().messages({
-    'string.base': 'Please add expected delivery',
-    'string.empty': 'Course expected delivery is required',
-    'any.required': 'Course expected delivery is required',
-    'array.min': 'Please add expected delivery',
+    'string.base': 'Please add expected duration',
+    'string.empty': 'Course expected duration is required',
+    'any.required': 'Course expected duration is required',
+    'array.min': 'Please add expected duration',
   }),
   basicTitle: Joi.string().required().messages({
     'string.base': 'Please add basic title',
@@ -98,7 +98,7 @@ const courseUpdateSchema: ObjectSchema = Joi.object().keys({
     'any.required': 'Course tags are required',
     'array.min': 'Please add at least one tag',
   }),
-  price: Joi.number().required().greater(4.99).messages({
+  price: Joi.number().required().greater(1).messages({
     'string.base': 'Please add a course price',
     'string.empty': 'Course price is required',
     'any.required': 'Course price is required',
@@ -111,10 +111,10 @@ const courseUpdateSchema: ObjectSchema = Joi.object().keys({
     'array.min': 'Please add a cover image',
   }),
   expectedDuration: Joi.string().required().messages({
-    'string.base': 'Please add expected delivery',
-    'string.empty': 'Course expected delivery is required',
-    'any.required': 'Course expected delivery is required',
-    'array.min': 'Please add expected delivery',
+    'string.base': 'Please add expected duration',
+    'string.empty': 'Course expected duration is required',
+    'any.required': 'Course expected duration is required',
+    'array.min': 'Please add expected duration',
   }),
   basicTitle: Joi.string().required().messages({
     'string.base': 'Please add basic title',

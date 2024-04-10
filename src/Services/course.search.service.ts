@@ -5,7 +5,7 @@ import {
   IPaginateProps,
   IQueryList,
   ISearchResult,
-} from '@remus1504/micrograde';
+} from '@remus1504/micrograde-shared';
 
 const coursesSearchByInstructorId = async (
   searchQuery: string,
@@ -14,7 +14,7 @@ const coursesSearchByInstructorId = async (
   const queryList: IQueryList[] = [
     {
       query_string: {
-        fields: ['sellerId'],
+        fields: ['instructorId'],
         query: `*${searchQuery}*`,
       },
     },
@@ -42,7 +42,7 @@ const coursesSearchByInstructorId = async (
 const coursesSearch = async (
   searchQuery: string,
   paginate: IPaginateProps,
-  deliveryTime?: string,
+  durationTime?: string,
   min?: number,
   max?: number
 ): Promise<ISearchResult> => {
@@ -70,11 +70,11 @@ const coursesSearch = async (
     },
   ];
 
-  if (deliveryTime !== 'undefined') {
+  if (durationTime !== 'undefined') {
     queryList.push({
       query_string: {
-        fields: ['expectedDelivery'],
-        query: `*${deliveryTime}*`,
+        fields: ['expectedDuration'],
+        query: `*${durationTime}*`,
       },
     });
   }

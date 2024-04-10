@@ -9,7 +9,7 @@ import {
   getTopRatedCoursesByCategory,
   coursesSearchByCategory,
 } from '../Services/course.search.service';
-import { ISearchResult, InstructorCourse } from '@remus1504/micrograde';
+import { ISearchResult, InstructorCourse } from '@remus1504/micrograde-shared';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 

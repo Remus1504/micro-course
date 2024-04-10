@@ -5,28 +5,28 @@ import {
   BadRequestError,
   InstructorCourse,
   uploads,
-} from '@remus1504/micrograde';
+} from '@remus1504/micrograde-shared';
 import { UploadApiResponse } from 'cloudinary';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 const courseCreate = async (req: Request, res: Response): Promise<void> => {
   const { error } = await Promise.resolve(
-    courseCreateSchema.validate(req.body)
+    courseCreateSchema.validate(req.body),
   );
   if (error?.details) {
     throw new BadRequestError(
       error.details[0].message,
-      'Create course() method'
+      'Create course() method',
     );
   }
   const result: UploadApiResponse = (await uploads(
-    req.body.coverImage
+    req.body.coverImage,
   )) as UploadApiResponse;
   if (!result.public_id) {
     throw new BadRequestError(
       'File upload error. Try again.',
-      'Create course() method'
+      'Create course() method',
     );
   }
   const count: number = await getDocumentCount('courses');
